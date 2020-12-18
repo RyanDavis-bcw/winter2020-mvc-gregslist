@@ -12,10 +12,38 @@ function _drawCars() {
   document.getElementById('cars').innerHTML = template
 }
 
+function _drawCarButton() {
+  document.getElementById('carButton').innerHTML = `<div class="col text-right">
+        <button type="button" class="btn btn-outline-warning" data-toggle="modal"
+          data-target="#new-car-modal">+Car</button>
+        <div class="modal fade" id="new-car-modal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">NEW CAR FORM</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form onsubmit="app.carsController.createCar()">
+                  <input type="text" id="make" placeholder="make" required>
+                  <input type="text" id="model" placeholder="model" required>
+                  <input type="number" id="year" placeholder="year" required min="1885" value="2020">
+                  <input type="number" id="price" placeholder="price" required min="1">
+                  <input type="text" id="description" placeholder="description">
+                  <input type="text" id="imgUrl" placeholder="Image Url">
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>`
+}
+
 export default class CarsController {
   constructor() {
     ProxyState.on("cars", _drawCars)
     _drawCars()
+    _drawCarButton()
   }
 
   createCar() {
