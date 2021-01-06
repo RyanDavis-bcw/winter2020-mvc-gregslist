@@ -1,5 +1,6 @@
 import { ProxyState } from "../AppState.js"
 import { homesService } from "../Services/HomesService.js"
+import { api } from "../Services/AxiosService.js"
 
 function _drawHomes() {
   let homes = ProxyState.homes
@@ -44,9 +45,65 @@ export default class HomesController {
     ProxyState.on("homes", _drawHomes)
     _drawHomes()
     _drawHomeButton()
+    this.getHomes()
+  }
+
+  getHomes() {
+    try {
+      homesService.getHomes()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  createHome() {
+    window.event.preventDefault()
+    let form = window.event.target
+    let newHome = {
+      bedrooms: form['bedrooms'].value,
+      bathrooms: form['bathrooms'].value,
+      imgUrl: form['imgUrl'].value,
+      year: form['year'].value,
+      price: form['price'].value,
+      levels: form['levels'].value,
+      description: form['description'].values
+    }
+    try {
+      homesService.createHome(newHome)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   deleteHome(id) {
     homesService.deleteHome(id)
+  }
+
+  bid(id, price) {
+    try {
+      homesService.bid(id, price)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  editHome(id) {
+    debugger
+    event.preventDefault()
+    let form = window.event.target
+    let newValues = {
+      bedrooms: form['bedrooms'].value,
+      bathrooms: form['bathrooms'].value,
+      imgUrl: form['imgUrl'].value,
+      year: form['year'].value,
+      price: form['price'].value,
+      levels: form['levels'].value,
+      description: form['description'].values
+    }
+    try {
+      homesService.editHome(id, newValues)
+    } catch (error) {
+      console.error(error)
+    }
+    console.log(newValues)
   }
 }

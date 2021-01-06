@@ -44,6 +44,16 @@ export default class CarsController {
     ProxyState.on("cars", _drawCars)
     _drawCars()
     _drawCarButton()
+    this.getCars()
+  }
+
+  getCars() {
+    try {
+      carsService.getCars()
+    } catch (error) {
+      console.error(error)
+    }
+
   }
 
   createCar() {
@@ -58,7 +68,11 @@ export default class CarsController {
       description: form['description'].value,
       imgUrl: form['imgUrl'].value
     }
-    carsService.createCar(newCar)
+    try {
+      carsService.createCar(newCar)
+    } catch (error) {
+      console.error(error)
+    }
     console.log(7)
     // @ts-ignore
     form.reset()
@@ -68,6 +82,18 @@ export default class CarsController {
 
 
   deleteCar(id) {
-    carsService.deleteCar(id)
+    console.log(id)
+    try {
+      carsService.deleteCar(id)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  bid(id, price) {
+    try {
+      carsService.bid(id, price)
+    } catch (error) {
+      console.error(error)
+    }
   }
 }

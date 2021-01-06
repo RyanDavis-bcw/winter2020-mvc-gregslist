@@ -41,6 +41,36 @@ export default class JobsController {
     ProxyState.on("jobs", _drawJobs)
     _drawJobs()
     _drawJobButton()
+    this.getJob()
+  }
+
+  getJob() {
+    try {
+      jobService.getJob()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  createJob() {
+    window.event.preventDefault()
+    let form = window.event.target
+    let newJob = {
+      company: form['company'].value,
+      jobTitle: form['jobTitle'].value,
+      hours: form['hours'].value,
+      rate: form['rate'].value,
+      description: form['description'].value
+    }
+    try {
+      jobService.createJob(newJob)
+    } catch (error) {
+      console.error(error)
+    }
+    //@ts-ignore
+    form.reset()
+    //@ts-ignore
+    document.getElementById("new-job-modal").modal('hide')
   }
 
   deleteJob(id) {
